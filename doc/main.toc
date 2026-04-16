@@ -1,0 +1,13 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Parte 1: Herramientas de medida de software}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Análisis de métricas (Radon)}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Interpretación y Justificación}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Parte 2: Fiabilidad del sistema}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Implementación de la herramienta de cálculo}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Indicadores de Fiabilidad}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Representación Gráfica y Curva de Fiabilidad}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Parte 3: Mantenimiento y mejora de calidad}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Tests desarrollados}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Análisis de mejoras propuestas}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Cambios realizados en el código}{9}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Comparativa de resultados}{10}{subsection.3.4}%
