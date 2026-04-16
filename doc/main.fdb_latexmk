@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1776356590.26971 "/home/h0l0n/Documents/01-uah/04-year/05-cps/pl2/doc/main.tex" "main.pdf" "main" 1776356590.8232 0
+["pdflatex"] 1776359192.39293 "/home/h0l0n/Documents/01-uah/04-year/05-cps/PL2-CPS/doc/main.tex" "main.pdf" "main" 1776359192.93484 0
   "/etc/texmf/web2c/texmf.cnf" 1775748472.62753 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/h0l0n/Documents/01-uah/04-year/05-cps/pl2/doc/main.tex" 1776356586.41793 21242 f3128a024b1c7962749c4ea8609c5427 ""
+  "/home/h0l0n/Documents/01-uah/04-year/05-cps/PL2-CPS/doc/main.tex" 1776359192.24128 21235 ea16de25bec13927e8dd786b0685bd03 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -102,10 +102,10 @@
   "imgs/test_no_negative_qualities.png" 1776351184.512 111013 bb7e8a4edf917fddeaec92926e1f6696 ""
   "imgs/test_non_specified.png" 1776350986.65884 82371 d257e15b4e8cbd7efc72de79c37b0f25 ""
   "imgs/test_sulfuras.png" 1776351035.81123 34147 bde05624d0577f29e8a6f21b9151bec7 ""
-  "main.aux" 1776356590.7922 5720 2231b650131faef8e48ec9b442efe65d "pdflatex"
-  "main.out" 1776356590.7922 2765 437ec673e8c169d6d33d4c39204998c8 "pdflatex"
-  "main.tex" 1776356586.41793 21242 f3128a024b1c7962749c4ea8609c5427 ""
-  "main.toc" 1776356590.79321 1194 264e650364d99b9f6a687f6c8a74f90c "pdflatex"
+  "main.aux" 1776359192.90323 5720 2231b650131faef8e48ec9b442efe65d "pdflatex"
+  "main.out" 1776359192.90323 2765 437ec673e8c169d6d33d4c39204998c8 "pdflatex"
+  "main.tex" 1776359192.24128 21235 ea16de25bec13927e8dd786b0685bd03 ""
+  "main.toc" 1776359192.90424 1194 264e650364d99b9f6a687f6c8a74f90c "pdflatex"
   (generated)
   "main.aux"
   "main.log"

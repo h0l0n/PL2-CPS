@@ -1,9 +1,9 @@
-PWD /home/h0l0n/Documents/01-uah/04-year/05-cps/pl2/doc
+PWD /home/h0l0n/Documents/01-uah/04-year/05-cps/PL2-CPS/doc
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/h0l0n/Documents/01-uah/04-year/05-cps/pl2/doc/main.tex
+INPUT /home/h0l0n/Documents/01-uah/04-year/05-cps/PL2-CPS/doc/main.tex
 OUTPUT main.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
