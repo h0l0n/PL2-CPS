@@ -1,0 +1,633 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[parfill]{parskip}
+\usepackage{subcaption}
+\usepackage{cite}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{placeins} % Para \FloatBarrier
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+% Estilo para bloques APDU / código
+\lstdefinestyle{apdu}{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!8},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    showstringspaces=false
+}
+
+% --- Configuración de Colores para Métricas ---
+\definecolor{metGood}{rgb}{0.0, 0.6, 0.0}
+\definecolor{metMedium}{rgb}{1.0, 0.5, 0.0}
+\definecolor{metBad}{rgb}{0.8, 0.0, 0.0}
+\newcommand{\good}[1]{\textbf{\textcolor{metGood}{#1}}}
+\newcommand{\medium}[1]{\textbf{\textcolor{metMedium}{#1}}}
+\newcommand{\bad}[1]{\textbf{\textcolor{metBad}{#1}}}
+
+% --- Configuración de Estilo ---
+
+
+\definecolor{uahblue}{rgb}{0.0, 0.27, 0.55}
+
+\begin{document}
+
+\title{Práctica 2\\Calidad, Fiabilidad y Mantenimiento}
+
+\author{
+  \begin{tabular}{c}
+    Ignacio Mansilla Díez \\[0.2cm]
+    Jaime Sanz García \\[0.2cm]
+    Daniel Godoy Velles
+  \end{tabular}
+}
+
+\date{\today}
+
+
+
+\maketitle
+
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Parte 1: Herramientas de medida de software}
+En esta sección se analiza el proyecto utilizando la herramienta \texttt{Radon} para extraer métricas de software relevantes.
+
+\subsection{Análisis de métricas (Radon)}
+
+% --- Tabla 1: Complejidad Ciclomática ---
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lccl cc}
+        \toprule
+        \textbf{Fichero}                       & \textbf{Tipo} & \textbf{Línea} & \textbf{Nombre}               & \textbf{CC} & \textbf{Grado} \\
+        \midrule
+        texttest\_fixture.py                   & F             & 7:0            & main                          & 4           & \good{A}       \\
+        gilded\_rose.py                        & M             & 8:4            & GildedRose.update\_quality    & 19          & \medium{C}     \\
+        gilded\_rose.py                        & C             & 3:0            & GildedRose                    & 11          & \medium{C}     \\
+        gilded\_rose.py                        & C             & 39:0           & Item                          & 2           & \good{A}       \\
+        gilded\_rose.py                        & M             & 5:4            & GildedRose.\_\_init\_\_       & 1           & \good{A}       \\
+        gilded\_rose.py                        & M             & 40:4           & Item.\_\_init\_\_             & 1           & \good{A}       \\
+        gilded\_rose.py                        & M             & 45:4           & Item.\_\_repr\_\_             & 1           & \good{A}       \\
+        src/python/\_\_init\_\_.py             & F             & 1:0            & hello                         & 1           & \good{A}       \\
+        tests/test\_gilded\_rose\_approvals.py & F             & 7:0            & test\_gilded\_rose\_approvals & 1           & \good{A}       \\
+        \bottomrule
+    \end{tabular}
+    \caption{Resultados de Complejidad Ciclomática (Radon CC)}
+    \label{tab:radon_cc}
+\end{table}
+
+% --- Tabla 2: Métricas Raw ---
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Fichero}                       & \textbf{LOC} & \textbf{LLOC} & \textbf{SLOC} & \textbf{Coment.} & \textbf{Blank} \\
+        \midrule
+        texttest\_fixture.py                   & 36           & 22            & 29            & 2                & 6              \\
+        gilded\_rose.py                        & 46           & 39            & 39            & 1                & 6              \\
+        src/python/\_\_init\_\_.py             & 2            & 2             & 2             & 0                & 0              \\
+        tests/test\_gilded\_rose\_approvals.py & 21           & 17            & 17            & 0                & 4              \\
+        tests/test\_gilded\_rose.py            & 16           & 10            & 10            & 1                & 5              \\
+        tests/\_\_init\_\_.py                  & 0            & 0             & 0             & 0                & 0              \\
+        tests/conftest.py                      & 0            & 0             & 0             & 0                & 0              \\
+        \bottomrule
+    \end{tabular}
+    \caption{Métricas Raw (Radon RAW)}
+    \label{tab:radon_raw}
+\end{table}
+
+% --- Tabla 3: Métricas de Halstead ---
+\begin{table}[H]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lcccccccc c}
+        \toprule
+        \textbf{Fichero}            & \textbf{$n_1$} & \textbf{$n_2$} & \textbf{$N_1$} & \textbf{$N_2$} & \textbf{Vocab.} & \textbf{Vol.} & \textbf{Diff.} & \textbf{Effort} & \textbf{Bugs}  \\
+        \midrule
+        texttest\_fixture.py        & 5              & 12             & 9              & 17             & 17              & 106.27        & 3.54           & 376.39          & \good{0.035}   \\
+        gilded\_rose.py             & 8              & 15             & 27             & 54             & 23              & 366.41        & 14.40          & \bad{5276.28}   & \medium{0.122} \\
+        tests/.../approvals.py      & 1              & 2              & 1              & 2              & 3               & 4.75          & 0.50           & 2.38            & \good{0.002}   \\
+        tests/test\_gilded\_rose.py & 1              & 2              & 1              & 2              & 3               & 4.75          & 0.50           & 2.38            & \good{0.002}   \\
+        src/python/\_\_init\_\_.py  & 0              & 0              & 0              & 0              & 0               & 0.00          & 0.00           & 0.00            & \good{0.000}   \\
+        tests/\_\_init\_\_.py       & 0              & 0              & 0              & 0              & 0               & 0.00          & 0.00           & 0.00            & \good{0.000}   \\
+        tests/conftest.py           & 0              & 0              & 0              & 0              & 0               & 0.00          & 0.00           & 0.00            & \good{0.000}   \\
+        \bottomrule
+    \end{tabular}
+    \caption{Métricas de Halstead (Radon HAL)}
+    \label{tab:radon_hal}
+\end{table}
+
+% --- Tabla 4: Maintainability Index ---
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Fichero}                       & \textbf{Score} & \textbf{Grado} \\
+        \midrule
+        texttest\_fixture.py                   & 70.99          & \good{A}       \\
+        gilded\_rose.py                        & 53.77          & \good{A}       \\
+        src/python/\_\_init\_\_.py             & 100.00         & \good{A}       \\
+        tests/test\_gilded\_rose\_approvals.py & 68.15          & \good{A}       \\
+        tests/test\_gilded\_rose.py            & 61.88          & \good{A}       \\
+        tests/\_\_init\_\_.py                  & 100.00         & \good{A}       \\
+        tests/conftest.py                      & 100.00         & \good{A}       \\
+        \bottomrule
+    \end{tabular}
+    \caption{Maintainability Index (Radon MI)}
+    \label{tab:radon_mi}
+\end{table}
+
+\subsection{Interpretación y Justificación}
+Antes de proceder con la comparativa, es fundamental entender qué mide cada una de las métricas extraídas:
+
+\begin{itemize}
+    \item \textbf{Complejidad Ciclomática (CC):} Mide el número de caminos linealmente
+          independientes a través del código, el cual aumenta con el número de bifurcaciones.
+          Una complejidad alta indica una lógica de control difícil de seguir y testear.
+          Por ejemplo, el número de casos de prueba necesario para cubrir
+          completamente el código aumenta exponencialmente con la complejidad.
+    \item \textbf{Métricas Raw (RAW):} Proporcionan conteos básicos que permiten evaluar
+          el tamaño físico del software y cuán documentado está el código:
+          \textbf{LOC} (\textit{Lines of Code}) cuenta el total de líneas del fichero;
+          \textbf{LLOC} (\textit{Logical Lines of Code}) cuenta las instrucciones lógicas
+          (asignaciones, condicionales, llamadas, etc.);
+          \textbf{SLOC} (\textit{Source Lines of Code}) cuenta únicamente las líneas con código
+          real, excluyendo comentarios y líneas en blanco, siendo el indicador más representativo
+          del tamaño efectivo;
+          \textbf{Coment.} recoge las líneas de comentario, cuya proporción respecto a SLOC es un
+          indicador directo de documentación y, por ende, de mantenibilidad;
+          y \textbf{Blank} contabiliza las líneas en blanco, que influyen en la legibilidad.
+    \item \textbf{Métricas de Halstead (HAL):} Evalúan la complejidad algorítmica basándose en el
+          número de operadores y operandos únicos usados ($n_1, n_2$) y el número de operadores y
+          operandos totales sin unicidad ($N_1, N_2$). Incluye el \textit{Vocabulario} (número de
+          operadores y operandos únicos), el \textit{Volumen} (tamaño de la implementación) y
+          el \textit{Esfuerzo} (carga mental para entender el código). Además, estima la probabilidad
+          de errores (Bugs) basándose en el volumen y el vocabulario.
+          Un esfuerzo alto indica que el código es difícil de entender y mantener, lo que puede
+          traducirse en una mayor probabilidad de introducir errores en futuras modificaciones.
+    \item \textbf{Índice de Mantenibilidad (MI):} Un valor compuesto que estima la
+          facilidad con la que el software puede ser mantenido, combinando CC, Halstead y
+          el tamaño del código. A mayor valor, mejor mantenibilidad. Sin embargo, es
+          importante destacar que el MI puede ser engañoso en archivos pequeños, ya que
+          tiende a ser artificialmente alto en este caso.
+\end{itemize}
+
+Al realizar un análisis comparativo entre los distintos módulos del proyecto, se observa
+una clara disparidad en la calidad del código, concentrándose la mayor deuda técnica en el
+archivo \texttt{gilded\_rose.py}.
+
+\begin{itemize}
+    \item \textbf{Comparativa de Complejidad (CC):} Mientras que los módulos de apoyo
+          como \texttt{texttest\_fixture.py} y los tests mantienen una complejidad de grado
+          \good{A} (valores entre 1 y 5), el archivo \texttt{gilded\_rose.py} destaca
+          negativamente con un grado \medium{C} (valores entre 11 y 20) en su método
+          principal. Esta diferencia subraya que en el archivo \texttt{gilded\_rose.py},
+          en específico en el método \texttt{update\_quality}, la lógica de control es
+          mucho más intrincada debido a un mayor número de bifurcaciones, lo que
+          dificulta su comprensión y mantenimiento.
+
+    \item \textbf{Distribución del Esfuerzo (Halstead):} El contraste en el esfuerzo mental
+          (Effort) es el más revelador. El archivo \texttt{gilded\_rose.py} registra un valor de
+          \bad{5276.28}, lo que supone casi 14 veces más esfuerzo que el siguiente archivo más complejo
+          (\texttt{texttest\_fixture.py} con 376.39) y miles de veces más que los archivos de test.
+          Esto posiciona a \texttt{gilded\_rose.py} como el cuello de botella crítico para cualquier
+          mantenimiento futuro.
+
+    \item \textbf{Densidad de Errores y Tamaño:} A pesar de que todos los archivos tienen un tamaño
+          similar en líneas de código (RAW), con \texttt{gilded\_rose.py} (39 SLOC) y
+          \texttt{texttest\_fixture.py} (29 SLOC) muy parejos, la probabilidad de bugs estimada por
+          Halstead es notablemente superior en el primero (\medium{0.122} frente a \good{0.035}). Esto
+          confirma que no es el tamaño del archivo lo que genera el riesgo, sino la densidad de
+          operaciones y operandos.
+
+    \item \textbf{Limitaciones del Índice de Mantenibilidad (MI):} Curiosamente, todos
+          los archivos presentan un grado \good{A} en el índice MI. Sin embargo, al compararlo
+          con el esfuerzo de Halstead, se hace evidente que el MI tiende a ser optimista en
+          archivos pequeños, ocultando la complejidad real que sí detectan las métricas de CC y Effort.
+\end{itemize}
+
+
+\section{Parte 2: Fiabilidad del sistema}
+Análisis del comportamiento de la aplicación desde el punto de vista de la fiabilidad,
+simulando un entorno de servidor propenso a fallos. Para ello, se ha implementado una
+herramienta de cálculo en formato \texttt{Excel} que permite obtener automáticamente
+los principales indicadores de fiabilidad a partir de muestras de \textit{uptime} y
+\textit{downtime}, así como representar gráficamente el comportamiento del sistema y
+la curva de supervivencia $R(t)$.
+
+\subsection{Implementación de la herramienta de cálculo}
+
+El archivo Excel se ha estructurado en tres hojas independientes, una por cada apartado
+solicitado en el enunciado, de modo que cada una se pueda analizar de forma aislada
+sin que ello afecte al resto:
+
+\begin{itemize}
+    \item \textbf{Hoja \texttt{a) Indicadores básicos}:} permite introducir una muestra
+          binaria de uptime/downtime para 20 unidades de tiempo y calcula automáticamente
+          los indicadores de fiabilidad fundamentales, junto con una representación
+          gráfica mediante celdas coloreadas.
+    \item \textbf{Hoja \texttt{b) Periodo de control}:} extiende la lógica anterior
+          permitiendo definir un periodo de control y una serie de caídas con \textbf{unidades
+          mixtas} (minutos, horas, días, semanas), normalizando todo internamente a una
+          unidad común mediante una tabla de conversión auxiliar.
+    \item \textbf{Hoja \texttt{c) Curva de fiabilidad}:} grafica la función
+          $R(t) = e^{-\lambda \cdot t}$ a lo largo de 10 semanas, tomando $\lambda$ por
+          defecto de la probabilidad de fallo calculada en la hoja anterior.
+\end{itemize}
+
+Todos los indicadores se han implementado mediante \textbf{fórmulas dinámicas}
+(\texttt{SUM}, \texttt{SUMPRODUCT}, \texttt{COUNT}, \texttt{VLOOKUP},
+\texttt{IFERROR}, \texttt{EXP}), de manera que cualquier modificación en los datos de
+entrada propaga automáticamente los cambios al resto del modelo. No se ha utilizado
+ningún valor precalculado.
+
+Cabe señalar que el enunciado no proporciona un \textit{log} concreto del servidor sobre
+el que ejecutar los cálculos. Por ello, se ha optado por introducir una muestra
+representativa que cumple con el mínimo exigido (al menos 20 unidades de tiempo) y que
+permite ilustrar el correcto funcionamiento de las fórmulas. Si se sustituyesen los
+valores de entrada por otros, todos los indicadores se recalcularían sin necesidad de
+modificar el archivo.
+
+\subsection{Indicadores de Fiabilidad}
+
+En la primera hoja se ha replicado la estructura de la \textbf{Figura 1} del enunciado,
+ampliándola a 20 unidades de tiempo. Cada celda de la fila \textit{Sistema en marcha}
+contiene un \texttt{1} si el sistema está operativo en ese instante y un \texttt{0} si
+está caído; la fila \textit{Sistema caído} se calcula automáticamente como su complemento.
+Los indicadores extraídos se resumen en la siguiente tabla:
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Indicador}            & \textbf{Fórmula utilizada}                                  \\
+        \midrule
+        Uptime                        & $\sum$ celdas en marcha                                     \\
+        Downtime                      & $\sum$ celdas caídas                                        \\
+        Disponibilidad                & $\dfrac{\text{Uptime}}{\text{Uptime} + \text{Downtime}}$    \\[6pt]
+        Número acumulado de fallos    & Transiciones $1 \rightarrow 0$ entre instantes consecutivos \\
+        MTTF (\textit{Mean Time To Failure})  & $\dfrac{\text{Uptime}}{\text{Nº fallos}}$           \\[6pt]
+        MTTR (\textit{Mean Time To Repair})   & $\dfrac{\text{Downtime}}{\text{Nº fallos}}$         \\[6pt]
+        MTBF (\textit{Mean Time Between Failures}) & MTTF + MTTR                                    \\
+        Probabilidad de fallo         & $\dfrac{\text{Downtime}}{\text{Uptime} + \text{Downtime}}$  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Fórmulas implementadas para los indicadores de fiabilidad}
+    \label{tab:formulas_fiabilidad}
+\end{table}
+
+El cálculo del \textbf{número de fallos}: en lugar de
+contar simplemente las celdas a 0, se han contado las \textit{transiciones} desde
+estado \textit{en marcha} a estado \textit{caído}. De esta forma, una caída prolongada
+durante varias unidades consecutivas se contabiliza como un único fallo, lo cual es
+coherente con la definición clásica de tasa de fallos en ingeniería de fiabilidad.
+
+Los resultados obtenidos para la muestra introducida (13 unidades en marcha, 7 caídas)
+son los siguientes:
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Indicador}            & \textbf{Valor}    \\
+        \midrule
+        Uptime                        & 13                \\
+        Downtime                      & 7                 \\
+        Disponibilidad                & \good{65{,}00\%}  \\
+        Número acumulado de fallos    & 4                 \\
+        MTTF                          & 3{,}25            \\
+        MTBF                          & 5{,}00            \\
+        MTTR                          & 1{,}75            \\
+        Probabilidad de fallo         & \medium{35{,}00\%}\\
+        \bottomrule
+    \end{tabular}
+    \caption{Indicadores obtenidos para la muestra de 20 unidades de tiempo}
+    \label{tab:indicadores_a}
+\end{table}
+
+\subsubsection{Hoja b: cálculo con periodo de control y unidades mixtas}
+
+La segunda hoja replica el ejemplo de la \textbf{Figura 2} del enunciado y permite
+introducir un periodo de control y hasta 10 caídas, cada una con su propia unidad
+temporal. Internamente, una tabla de conversión auxiliar (\texttt{minutes},
+\texttt{hours}, \texttt{days}, \texttt{weeks}) traduce todos los valores a una unidad
+común (días) mediante \texttt{VLOOKUP}, de modo que se pueden mezclar libremente
+unidades sin perder consistencia. Para los datos del ejemplo del enunciado (62 semanas
+de control con 9 caídas), los indicadores resultantes son:
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Indicador}      & \textbf{Valor} & \textbf{Unidad} \\
+        \midrule
+        Test period (días)      & 434{,}00       & días            \\
+        Downtime                & 369{,}27       & días            \\
+        Uptime                  & 64{,}73        & días            \\
+        Disponibilidad          & \bad{14{,}92\%}& --              \\
+        Número de fallos        & 9              & --              \\
+        MTTF                    & 7{,}19         & días            \\
+        MTBF                    & 48{,}22        & días            \\
+        MTTR                    & 41{,}03        & días            \\
+        Probabilidad de fallo   & \bad{85{,}08\%}& --              \\
+        \bottomrule
+    \end{tabular}
+    \caption{Indicadores con periodo de control (62 semanas)}
+    \label{tab:indicadores_b}
+\end{table}
+
+Estos resultados reflejan un servidor con una disponibilidad muy baja (\bad{14{,}92\%}),
+lo que indica que el sistema pasa la mayor parte del tiempo caído. El valor elevado de
+MTTR (41{,}03 días) frente al MTTF (7{,}19 días) confirma que el principal problema
+no es la frecuencia de fallos, sino el tiempo necesario para recuperarse de cada uno.
+
+\subsection{Representación Gráfica y Curva de Fiabilidad}
+
+\subsubsection{Hoja a: Representación gráfica del estado del sistema}
+
+Siguiendo la \textbf{Figura 1} del enunciado, la representación gráfica de los periodos
+de funcionamiento y fallo se ha implementado mediante el coloreado directo de las
+celdas correspondientes: las celdas asociadas a las unidades de tiempo en las que el
+sistema está operativo se rellenan en \textcolor{metGood}{\textbf{verde}}, mientras que
+las correspondientes a fallos se rellenan en \textcolor{metBad}{\textbf{rojo}}. De este
+modo, la propia tabla actúa como diagrama temporal del estado del sistema.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Hoja_a.png}
+    \caption{Hoja a) — Representación gráfica del estado del sistema e indicadores
+    de fiabilidad.}
+    \label{fig:excel_hoja_a}
+\end{figure}
+
+\subsubsection{Hoja b: cálculo con unidades mixtas}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Hoja_b.png}
+    \caption{Hoja b) — Cálculo de indicadores con periodo de control de 62 semanas.}
+    \label{fig:excel_hoja_b}
+\end{figure}
+
+\subsubsection{Hoja c: Curva de fiabilidad $R(t)$}
+
+La hoja c) implementa la curva de fiabilidad definida por:
+
+\begin{equation}
+    R(t) = e^{-\lambda \cdot t}
+    \label{eq:fiabilidad}
+\end{equation}
+
+donde $\lambda$ representa la tasa de fallos y se toma, por defecto, de la
+\textit{probabilidad de fallo} calculada en la hoja b. El usuario puede sobrescribir
+manualmente $\lambda$ si lo desea, gracias a un campo de \textit{override} adicional.
+La función se evalúa para $t = 0, 1, 2, \ldots, 10$ semanas, junto con su complemento
+$F(t) = 1 - R(t)$ (probabilidad de fallo acumulada).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Hoja_c.png}
+    \caption{Hoja c) — Curva de fiabilidad}
+    \label{fig:excel_hoja_c}
+\end{figure}
+
+Cabe destacar que, a diferencia de la curva mostrada en la Figura 3 del enunciado, la
+curva implementada presenta un comportamiento \textbf{decreciente}, lo cual es
+matemáticamente coherente con la fórmula \eqref{eq:fiabilidad}: dado que $\lambda > 0$
+y $t \geq 0$, la función $e^{-\lambda \cdot t}$ es estrictamente decreciente en $t$.
+La probabilidad de supervivencia parte de $R(0) = 1$ (sistema 100\% fiable en el
+instante inicial) y tiende asintóticamente a 0 conforme $t$ crece.
+
+Para el valor de $\lambda \approx 0{,}85$ obtenido en el caso del servidor analizado,
+la fiabilidad cae rápidamente: tras una sola semana, la probabilidad de supervivencia
+ya se sitúa en torno al \bad{42\%}, y a las 5 semanas es prácticamente despreciable
+(\bad{1{,}4\%}). Esto refleja el deterioro extremo del sistema y resulta consistente
+con la baja disponibilidad observada en la hoja anterior.
+
+\newpage
+\section{Parte 3: Mantenimiento y mejora de calidad}
+Propuesta y ejecución de mejoras en el código para optimizar el diseño y mejorar las métricas obtenidas anteriormente.
+
+Lo primero que se ha realizado es un conjunto de tests a partir de la funcionalidad indicada en los requisitos de Gilded Rose, para posteriormente realizar una refactorización del código y mejorar las métricas obtenidas en la Parte 1. De esta manera, podemos asegurar el correcto funcionamiento del código mientras es refactorizado.
+
+\subsection{Tests desarrollados}
+
+A continuación se muestran los tests desarrollados para cada uno de los tipos de ítems del sistema, así como los tests de invariantes globales (calidad nunca negativa ni superior a 50):
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_non_specified.png}
+    \caption{Test: ítems sin categoría especial}
+    \label{fig:test_non_specified}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_sulfuras.png}
+    \caption{Test: Sulfuras, Hand of Ragnaros}
+    \label{fig:test_sulfuras}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_aged_brie.png}
+    \caption{Test: Aged Brie}
+    \label{fig:test_aged_brie}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_backstage_passes.png}
+    \caption{Test: Backstage passes}
+    \label{fig:test_backstage_passes}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_conjured.png}
+    \caption{Test: Conjured Mana Cake}
+    \label{fig:test_conjured}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_no_negative_qualities.png}
+    \caption{Test: la calidad nunca es negativa}
+    \label{fig:test_no_negative_qualities}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test_no_greater_50.png}
+    \caption{Test: la calidad nunca supera 50}
+    \label{fig:test_no_greater_50}
+\end{figure}
+
+\subsection{Análisis de mejoras propuestas}
+
+A partir de los tests desarrollados y del análisis de métricas de la Parte 1, se identifican las siguientes mejoras:
+
+\begin{itemize}
+    \item \textbf{Separación de lógica por tipo de ítem:} Analizar y encapsular la lógica para cada
+          tipo de objeto (Aged Brie, Sulfuras, Backstage Passes y cualquier otro) de forma
+          independiente, facilitando la lectura y la comprensión de cada caso.
+    \item \textbf{Sustitución de bifurcaciones por operaciones matemáticas:} Reemplazar la lógica
+          de limitación de calidad ($0 \leq \mathrm{calidad} \leq 50$) por el uso de \texttt{max} y
+          \texttt{min}, reduciendo el número de ramas y, por tanto, la complejidad ciclomática.
+    \item \textbf{Generalización del flujo común:} Introducir en el flujo de control general las
+          modificaciones que se aplican a todos los objetos (o a la mayoría), dejando las excepciones
+          como casos particulares.
+    \item \textbf{Documentación del código:} Añadir comentarios explicativos en cada bloque lógico
+          para facilitar su comprensión y, por ende, su mantenibilidad futura.
+    \item \textbf{Eliminación de código duplicado:} Simplificar la lógica de cada tipo de ítem
+          suprimiendo redundancias y mejorando la claridad del flujo.
+\end{itemize}
+
+\subsection{Cambios realizados en el código}
+
+Aplicando las mejoras anteriores, el código refactorizado resultante es el siguiente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{gilded_refactor.png}
+    \caption{Código refactorizado de \texttt{gilded\_rose.py}}
+    \label{fig:refactored_code}
+\end{figure}
+
+No obstante, estas mejoras se realizan respetando las restricciones indicadas en los requisitos originales. Si se quisiera una mayor mantenibilidad y seguir más estrictamente el principio de responsabilidad única, se podría definir un conjunto de comportamientos asignados a los objetos mediante composición. En otras palabras, se podría aplicar el \textit{Strategy Pattern} para encapsular el comportamiento de cada tipo de ítem de forma intercambiable.
+
+\subsection{Comparativa de resultados}
+
+Las siguientes tablas comparan las métricas de \texttt{gilded\_rose.py} antes y después de la refactorización.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lccc c}
+        \toprule
+        \textbf{Nombre}            & \textbf{Tipo} & \textbf{Grado anterior} & \textbf{Grado actual} & \textbf{Mejora} \\
+        \midrule
+        GildedRose.update\_quality & M             & \medium{C} (19)         & \medium{B} (10)       & $\uparrow$      \\
+        GildedRose                 & C             & \medium{C} (11)         & \medium{B} (7)        & $\uparrow$      \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparativa de Complejidad Ciclomática (Radon CC)}
+    \label{tab:cc_comparativa}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Métrica} & \textbf{LOC} & \textbf{LLOC} & \textbf{SLOC} & \textbf{Coment.} & \textbf{Blank} \\
+        \midrule
+        Antes            & 46           & 39            & 39            & 1                & 6              \\
+        Después          & 76           & 38            & 33            & 9                & 13             \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparativa de Métricas Raw (Radon RAW)}
+    \label{tab:raw_comparativa}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lcccccccc c}
+        \toprule
+        \textbf{Estado} & \textbf{$n_1$} & \textbf{$n_2$} & \textbf{$N_1$} & \textbf{$N_2$} & \textbf{Vocab.} & \textbf{Vol.} & \textbf{Diff.} & \textbf{Effort}  & \textbf{Bugs}  \\
+        \midrule
+        Antes           & 8              & 15             & 27             & 54             & 23              & 366.41        & 14.40          & \bad{5276.28}    & \medium{0.122} \\
+        Después         & 5              & 14             & 16             & 32             & 19              & 203.90        & 5.71           & \medium{1165.15} & \good{0.068}   \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparativa de Métricas de Halstead (Radon HAL)}
+    \label{tab:hal_comparativa}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Estado} & \textbf{Score} & \textbf{Grado} \\
+        \midrule
+        Antes           & 53.77          & \good{A}       \\
+        Después         & 74.36          & \good{A}       \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparativa de Maintainability Index (Radon MI)}
+    \label{tab:mi_comparativa}
+\end{table}
+
+La refactorización produce mejoras en todas las métricas relevantes. En CC, tanto \texttt{update\_quality} como la clase \texttt{GildedRose} reducen su grado de \medium{C} a \medium{B}, gracias a la separación de la lógica en bloques independientes por tipo de ítem. En Halstead, el esfuerzo cae de \bad{5276.28} a \medium{1165.15} (una reducción del 78\%), y la probabilidad de bugs estimada mejora de \medium{0.122} a \good{0.068}. En Raw, el SLOC efectivo se reduce de 39 a 33 líneas, mientras que los comentarios pasan de 1 a 9, reflejando la mayor documentación introducida. El MI mejora de 53.77 a 74.36, manteniéndose en grado \good{A} y confirmando que la refactorización ha mejorado la mantenibilidad global.
+
+
+\newpage
+\section{Conclusiones}
+
+
+A lo largo de esta práctica se ha abordado el ciclo completo de aseguramiento
+de la calidad del software, desde la \textbf{medición} hasta la \textbf{mejora}, pasando
+por el análisis de \textbf{fiabilidad} en producción.
+
+\begin{itemize}
+    \item \textbf{Parte 1 — Medición:} La herramienta \texttt{Radon} ha permitido
+          identificar de forma objetiva la principal fuente de deuda técnica del proyecto,
+          el método \texttt{update\_quality} de \texttt{gilded\_rose.py}, con una
+          complejidad ciclomática de grado \medium{C} (CC = 19) y un esfuerzo de
+          Halstead de \bad{5276{,}28}. Esto demuestra que las métricas automáticas son
+          capaces de detectar problemas que un análisis visual del código podría pasar por alto.
+
+    \item \textbf{Parte 2 — Fiabilidad:} La herramienta de cálculo desarrollada en
+          Excel proporciona una visión clara y dinámica del comportamiento del sistema
+          frente a fallos. Los indicadores obtenidos (MTTF, MTBF, MTTR, disponibilidad
+          y curva $R(t)$) confirman que un servidor con tasa de fallos elevada presenta
+          una degradación exponencial de su fiabilidad en pocas semanas, lo que justifica
+          la necesidad de planes de mantenimiento preventivo.
+
+    \item \textbf{Parte 3 — Mantenimiento:} La refactorización guiada por las métricas
+          de la Parte 1, y respaldada por una batería de tests previos, ha logrado mejoras
+          en \textbf{todas} las dimensiones medidas: la complejidad ciclomática baja de
+          \medium{C} a \medium{B}, el esfuerzo de Halstead se reduce un \good{78\%}, la
+          probabilidad de bugs estimada disminuye casi a la mitad y el índice de
+          mantenibilidad aumenta de 53{,}77 a \good{74{,}36}.
+\end{itemize}
+
+En conjunto, la práctica evidencia que las métricas de software no son un fin en sí
+mismas, sino una \textbf{guía objetiva} para tomar decisiones de refactorización
+informadas. Combinadas con un buen conjunto de tests, permiten mejorar la calidad
+del código de forma segura, sin alterar su comportamiento funcional.
+
+\end{document}
